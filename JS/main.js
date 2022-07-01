@@ -13,3 +13,15 @@ let gameStatus; // null -> game in play; 1/-1 player win; 'T' tie
 /*----- event listeners -----*/
 
 /*----- functions -----*/
+init ();
+
+function init () {
+    board = new Array(42).fill(null);
+    turn = 1;
+    gameStatus = null;
+    render();
+}
+
+function render() {
+
+}
