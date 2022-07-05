@@ -34,7 +34,7 @@ body {
     height: 1vmin;
     border-width: 6vmin;
     border-style: solid;
-    border-color: lightgray transparent transparent;
+    border-color: yellow transparent transparent;
     transform: scale(0.6);
   }
   

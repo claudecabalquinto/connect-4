@@ -2,7 +2,7 @@
 const COLOR_LOOKUP = {
     '1': 'red',
     '-1': 'blue',
-    null: 'white'
+    0: 'white'
 
 };
 
@@ -15,27 +15,27 @@ let gameStatus; // null -> game in play; 1/-1 player win; 'T' tie
 
 
 /*----- cached element references -----*/
+const markerEls = [...document.querySelectorAll('#markers > div')];
 const circEls = document.querySelectorAll('#board > div');
 const msgEl = document.querySelector('h1');
 
 /*----- event listeners -----*/
-document.getElementById ('board').addEventListener('click', handleMove);
+document.getElementById ('markers').addEventListener('click', handleMove);
 
 /*----- functions -----*/
 init ();
 
 function init () {
-    //board = new Array(42).fill(null);
     board = [
-        null, null, null, null, null, null, null,
-        null, null, null, null, null, null, null,
-        null, null, null, null, null, null, null,
-        null, null, null, null, null, null, null,
-        null, null, null, null, null, null, null,
-        null, null, null, null, null, null, null,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
     ]
     turn = 1;
-    gameStatus = null;
+    gameStatus = 0;
     render();
 }
 
@@ -49,7 +49,8 @@ function render () {
 }
 
 function handleMove (evt) {
-    console.log(evt.target);
+    const COLOR_LOOKUP = markerEls.indexOf(evt.target);
+
 }
 
 function renderMessage() {
