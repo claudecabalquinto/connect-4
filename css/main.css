@@ -23,6 +23,27 @@ body {
     border-radius: 50%;
 }
 
+#markers {
+    display: grid;
+    grid-template-columns: repeat(7, 10vmin);
+    gap: 1vmin;
+    margin-top: 1vmin;
+}
+
+#markers > div {
+    height: 1vmin;
+    border-width: 6vmin;
+    border-style: solid;
+    border-color: lightgray transparent transparent;
+    transform: scale(0.6);
+  }
+  
+  #markers > div:hover {
+    transform: scale(0.9);
+    transition: transform 150ms ease-in;
+    border-top-color: black;
+  }
+
 button {
     margin-top: 5vmin;
     font-size: 4vmin;
