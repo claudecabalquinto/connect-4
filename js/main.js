@@ -15,12 +15,14 @@ let gameStatus; // null -> game in play; 1/-1 player win; 'T' tie
 
 
 /*----- cached element references -----*/
+const btnEl = document.querySelector('button');
 const markerEls = [...document.querySelectorAll('#markers > div')];
 const circEls = document.querySelectorAll('#board > div');
 const msgEl = document.querySelector('h1');
 
 /*----- event listeners -----*/
 document.getElementById ('markers').addEventListener('click', handleDrop);
+btnEl.addEventListener('click', init);
 
 /*----- functions -----*/
 init ();
