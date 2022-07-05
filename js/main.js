@@ -64,7 +64,7 @@ function handleDrop (evt) {
 }
 
 function renderMessage() {
-    if (gameStatus === null) {
+    if (gameStatus === 0) {
       msgEl.innerHTML = `Player <span style="color: ${COLOR_LOOKUP[turn]}">${COLOR_LOOKUP[turn].toUpperCase()}</span>'s Turn`;
     } else if (gameStatus === 'T') {
       // Tie game

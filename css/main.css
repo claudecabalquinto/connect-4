@@ -27,7 +27,7 @@ body {
     display: grid;
     grid-template-columns: repeat(7, 10vmin);
     gap: 0vmin;
-    margin-top: .2vmin;
+    margin-top: 0.2vmin;
 }
 
 #markers > div {
