@@ -14,7 +14,7 @@ body {
     grid-template-rows: repeat(6, 10vmin);
     background-color: yellow;
     border: 0.5vmin solid black;
-    margin: auto;
+    margin: 0.2vmin;
 }
 
 
@@ -26,12 +26,12 @@ body {
 #markers {
     display: grid;
     grid-template-columns: repeat(7, 10vmin);
-    gap: 1vmin;
-    margin-top: 1vmin;
+    gap: 0vmin;
+    margin-top: .2vmin;
 }
 
 #markers > div {
-    height: 1vmin;
+    height: 0.2vmin;
     border-width: 6vmin;
     border-style: solid;
     border-color: yellow transparent transparent;

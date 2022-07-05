@@ -2,7 +2,7 @@
 const COLOR_LOOKUP = {
     '1': 'red',
     '-1': 'blue',
-    0: 'white'
+    '0': 'white'
 
 };
 
@@ -20,36 +20,46 @@ const circEls = document.querySelectorAll('#board > div');
 const msgEl = document.querySelector('h1');
 
 /*----- event listeners -----*/
-document.getElementById ('markers').addEventListener('click', handleMove);
+document.getElementById ('markers').addEventListener('click', handleDrop);
 
 /*----- functions -----*/
 init ();
 
 function init () {
     board = [
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
     ]
     turn = 1;
     gameStatus = 0;
     render();
 }
 
-
-
-function render () {
-    circEls.forEach(function(circEl, idx){
-        circEl.style.backgroundColor = COLOR_LOOKUP[board[idx]];
+function render (){
+    board.forEach(function(colArr, colIdx) {
+        colArr.forEach(function(cellVal, rowIdx) {
+            const cellEl = document.getElementById(`c${colIdx}r${rowIdx}`);
+            cellEl.style.backgroundColor = COLOR_LOOKUP[cellVal];
+        });
     });
     renderMessage();
 }
 
-function handleMove (evt) {
-    const COLOR_LOOKUP = markerEls.indexOf(evt.target);
+
+function handleDrop (evt) {
+    const colIdx = markerEls.indexOf(evt.target);
+    if(colIdx === -1) return;
+    const colArr = board[colIdx];
+    if (!colArr.includes(0)) return;
+    const rowIdx = colArr.indexOf(0);
+    colArr[rowIdx] = turn;
+    turn *= -1;
+    render();
 
 }
 
@@ -62,3 +72,4 @@ function renderMessage() {
       // Player has won!
     }
   }
+  
