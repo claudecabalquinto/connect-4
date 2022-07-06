@@ -78,19 +78,10 @@ function handleDrop (evt) {
 
 }
 
-// function renderMessage() {
-//     if (winner === 0) {
-//         msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[turn]}">${COLOR_LOOKUP[turn].toUpperCase()}</span>'s Turn`;
-//     } else if (winner === 'T') {
-//       msgEl.innerHTML = "It's a Tie!";
-//     } else { 
-//         msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[winner]}">${COLOR_LOOKUP[winner].toUpperCase()}</span> Wins!`;
-//     }
-//   }
 
 function renderMessage() {
     if (winner === 'T') {
-      msgEl.innerHTML = "It's a Tie!!!";
+      msgEl.innerHTML = "It's a Tie!";
     } else if (winner) {
       msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[winner]}">${COLOR_LOOKUP[winner].toUpperCase()}</span> Wins!`;
     } else {
@@ -101,8 +92,9 @@ function renderMessage() {
 
 function checkWin(colIdx, rowIdx){
     const player = board[colIdx][rowIdx];
-    return checkVertWin(colIdx, rowIdx, player) || checkHorzWin (colIdx, rowIdx, player)
-    // || checkDiagWin(colIdx, rowIdx, player)
+    return checkVertWin(colIdx, rowIdx, player) 
+    || checkHorzWin (colIdx, rowIdx, player)
+   // || checkDiagWin(colIdx, rowIdx, player)
 };
 
 
@@ -130,5 +122,5 @@ function checkHorzWin(colIdx, rowIdx, player) {
         count++;
         idx--;
     }
-    return count >= 4 ? winner = turn : 0;
+    return count >= 4 ? winner = turn*-1 : 0;
 }
