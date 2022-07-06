@@ -8,10 +8,12 @@ const COLOR_LOOKUP = {
 
 /*----- app's state (variables) -----*/
 // Aray of 42 elements...
-// null -> sq avail;
+// 0 -> sq avail;
 let board;
 let turn; // 1 or -1
-let gameStatus; // null -> game in play; 1/-1 player win; 'T' tie
+let gameStatus; // 0 -> game in play; 1/-1 player win; 'T' tie
+let player;
+let winner;
 
 
 /*----- cached element references -----*/
@@ -38,7 +40,7 @@ function init () {
         [0, 0, 0, 0, 0, 0],
     ]
     turn = 1;
-    gameStatus = 0;
+    winner = 0;
     render();
 }
 
@@ -50,6 +52,16 @@ function render (){
         });
     });
     renderMessage();
+    renderMarkers();
+}
+
+function renderMarkers() {
+    markerEls.forEach(function (markerEl, colIdx) {
+        markerEl.style.visibility = board[colIdx].includes(0) ? 'visible' : 'hidden';
+        if (winner === -1 || winner === 1 ) {
+            markerEl.style.visibility = 'hidden'
+    };
+    });
 }
 
 
@@ -61,17 +73,62 @@ function handleDrop (evt) {
     const rowIdx = colArr.indexOf(0);
     colArr[rowIdx] = turn;
     turn *= -1;
+    winner = checkWin (colIdx, rowIdx)
     render();
 
 }
 
+// function renderMessage() {
+//     if (winner === 0) {
+//         msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[turn]}">${COLOR_LOOKUP[turn].toUpperCase()}</span>'s Turn`;
+//     } else if (winner === 'T') {
+//       msgEl.innerHTML = "It's a Tie!";
+//     } else { 
+//         msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[winner]}">${COLOR_LOOKUP[winner].toUpperCase()}</span> Wins!`;
+//     }
+//   }
+
 function renderMessage() {
-    if (gameStatus === 0) {
-      msgEl.innerHTML = `Player <span style="color: ${COLOR_LOOKUP[turn]}">${COLOR_LOOKUP[turn].toUpperCase()}</span>'s Turn`;
-    } else if (gameStatus === 'T') {
-      // Tie game
+    if (winner === 'T') {
+      msgEl.innerHTML = "It's a Tie!!!";
+    } else if (winner) {
+      msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[winner]}">${COLOR_LOOKUP[winner].toUpperCase()}</span> Wins!`;
     } else {
-      // Player has won!
+      msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[turn]}">${COLOR_LOOKUP[turn].toUpperCase()}</span>'s Turn`;
     }
   }
-  
+
+
+function checkWin(colIdx, rowIdx){
+    const player = board[colIdx][rowIdx];
+    return checkVertWin(colIdx, rowIdx, player) || checkHorzWin (colIdx, rowIdx, player)
+    // || checkDiagWin(colIdx, rowIdx, player)
+};
+
+
+function checkVertWin(colIdx, rowIdx, player) {
+    const colArr = board[colIdx];
+    let count = 1;
+    rowIdx--;
+    while (board[colIdx][rowIdx] === player && rowIdx >= 0) {
+        count++;
+        rowIdx--;
+    }
+    return count === 4 ? winner - turn : 0;
+}
+
+function checkHorzWin(colIdx, rowIdx, player) {
+    const colArr = board[colIdx];
+    let count = 1;
+    let idx = colIdx + 1;
+    while (idx < board.length && board [idx][rowIdx] === player) {
+        count++;
+        idx++;
+    }
+    idx = colIdx -1;
+    while((idx >= 0) && board[idx][rowIdx] === player) {
+        count++;
+        idx--;
+    }
+    return count >= 4 ? winner = turn : 0;
+}
