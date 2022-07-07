@@ -93,8 +93,9 @@ function renderMessage() {
 function checkWin(colIdx, rowIdx){
     const player = board[colIdx][rowIdx];
     return checkVertWin(colIdx, rowIdx, player) 
-    || checkHorzWin(colIdx, rowIdx, player)
-    || checkDiagWin(colIdx, rowIdx, player)
+     || checkHorzWin(colIdx, rowIdx, player)
+     || checkDiagWinRight(colIdx, rowIdx, player)
+     || checkDiagWinLeft(colIdx, rowIdx, player)
 };
 
 
@@ -125,7 +126,7 @@ function checkHorzWin(colIdx, rowIdx, player) {
     return count >= 4 ? winner = turn*-1 : 0;
 }
 
-function checkDiagWin(colIdx, rowIdx, player) {
+function checkDiagWinRight(colIdx, rowIdx, player) {
  const colArr = board[colIdx][rowIdx];
  let count = 1;
  let idx1 = colIdx - 1;
@@ -145,3 +146,23 @@ function checkDiagWin(colIdx, rowIdx, player) {
  }
  return count >= 4 ? winner = turn*-1 : 0;
 }
+
+function checkDiagWinLeft(colIdx, rowIdx, player) {
+    const colArr = board[colIdx][rowIdx];
+    let count = 1;
+    let idx1 = colIdx + 1;
+    let idx2 = rowIdx + 1;
+    while (idx1 < board.length && idx2 >= 0 && board[idx1][idx2] === player) {
+       count++;
+       idx1++;
+       idx2++;
+    }
+    idx1 = colIdx - 1;
+    idx2 = rowIdx - 1;
+    while (idx1 >= 0 && idx2 < board[0].length && board[idx1][idx2] === player) {
+       count++;
+       idx1--;
+       idx2--;
+    }
+    return count >= 4 ? winner = turn*-1 : 0;
+   }
