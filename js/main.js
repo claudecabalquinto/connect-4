@@ -3,8 +3,8 @@ const COLOR_LOOKUP = {
     '1': 'red',
     '-1': 'blue',
     '0': 'white'
-
 };
+
 
 /*----- app's state (variables) -----*/
 // Aray of 42 elements...
@@ -21,6 +21,7 @@ const btnEl = document.querySelector('button');
 const markerEls = [...document.querySelectorAll('#markers > div')];
 const circEls = document.querySelectorAll('#board > div');
 const msgEl = document.querySelector('h1');
+
 
 /*----- event listeners -----*/
 document.getElementById ('markers').addEventListener('click', handleDrop);
@@ -51,6 +52,7 @@ function render (){
             cellEl.style.backgroundColor = COLOR_LOOKUP[cellVal];
         });
     });
+    btnEl.style.visibility = winner ? "visible" : "hidden";
     renderMessage();
     renderMarkers();
 }
@@ -96,6 +98,7 @@ function checkWin(colIdx, rowIdx){
      || checkHorzWin(colIdx, rowIdx, player)
      || checkDiagWinRight(colIdx, rowIdx, player)
      || checkDiagWinLeft(colIdx, rowIdx, player)
+     || (board.flat().includes(0) ? 0: "T")
 };
 
 
