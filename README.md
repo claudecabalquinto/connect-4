@@ -4,4 +4,9 @@ The Connect Four is a Two player turn based game. Each player will take turns pl
 TECHNOLOGY:
 JavaScript, HTML, CSS.
 
-https://claudecabalquinto.github.io/connect-4/
+<a href="https://claudecabalquinto.github.io/connect-4/"> PLAY GAME </a>
+
+https://claudecabalquinto.github.io/connect-4/ 
+
+
+https://imgur.com/zpaKysf
