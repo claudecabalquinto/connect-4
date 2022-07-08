@@ -24,13 +24,13 @@ const msgEl = document.querySelector('h1');
 
 
 /*----- event listeners -----*/
-document.getElementById ('markers').addEventListener('click', handleDrop);
+document.getElementById('markers').addEventListener('click', handleDrop);
 btnEl.addEventListener('click', init);
 
 /*----- functions -----*/
-init ();
+init();
 
-function init () {
+function init() {
     board = [
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0],
@@ -45,9 +45,9 @@ function init () {
     render();
 }
 
-function render (){
-    board.forEach(function(colArr, colIdx) {
-        colArr.forEach(function(cellVal, rowIdx) {
+function render() {
+    board.forEach(function (colArr, colIdx) {
+        colArr.forEach(function (cellVal, rowIdx) {
             const cellEl = document.getElementById(`c${colIdx}r${rowIdx}`);
             cellEl.style.backgroundColor = COLOR_LOOKUP[cellVal];
         });
@@ -60,22 +60,22 @@ function render (){
 function renderMarkers() {
     markerEls.forEach(function (markerEl, colIdx) {
         markerEl.style.visibility = board[colIdx].includes(0) ? 'visible' : 'hidden';
-        if (winner === -1 || winner === 1 ) {
+        if (winner === -1 || winner === 1) {
             markerEl.style.visibility = 'hidden'
-    };
+        };
     });
 }
 
 
-function handleDrop (evt) {
+function handleDrop(evt) {
     const colIdx = markerEls.indexOf(evt.target);
-    if(colIdx === -1) return;
+    if (colIdx === -1) return;
     const colArr = board[colIdx];
     if (!colArr.includes(0)) return;
     const rowIdx = colArr.indexOf(0);
     colArr[rowIdx] = turn;
     turn *= -1;
-    winner = checkWin (colIdx, rowIdx)
+    winner = checkWin(colIdx, rowIdx)
     render();
 
 }
@@ -83,22 +83,22 @@ function handleDrop (evt) {
 
 function renderMessage() {
     if (winner === 'T') {
-      msgEl.innerHTML = "It's a Tie!";
+        msgEl.innerHTML = "It's a Tie!";
     } else if (winner) {
-      msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[winner]}">${COLOR_LOOKUP[winner].toUpperCase()}</span> Wins!`;
+        msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[winner]}">${COLOR_LOOKUP[winner].toUpperCase()}</span> Wins!`;
     } else {
-      msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[turn]}">${COLOR_LOOKUP[turn].toUpperCase()}</span>'s Turn`;
+        msgEl.innerHTML = `<span style="color: ${COLOR_LOOKUP[turn]}">${COLOR_LOOKUP[turn].toUpperCase()}</span>'s Turn`;
     }
-  }
+}
 
 
-function checkWin(colIdx, rowIdx){
+function checkWin(colIdx, rowIdx) {
     const player = board[colIdx][rowIdx];
-    return checkVertWin(colIdx, rowIdx, player) 
-     || checkHorzWin(colIdx, rowIdx, player)
-     || checkDiagWinRight(colIdx, rowIdx, player)
-     || checkDiagWinLeft(colIdx, rowIdx, player)
-     || (board.flat().includes(0) ? 0: "T")
+    return checkVertWin(colIdx, rowIdx, player)
+        || checkHorzWin(colIdx, rowIdx, player)
+        || checkDiagWinRight(colIdx, rowIdx, player)
+        || checkDiagWinLeft(colIdx, rowIdx, player)
+        || (board.flat().includes(0) ? 0 : "T")
 };
 
 
@@ -117,37 +117,37 @@ function checkHorzWin(colIdx, rowIdx, player) {
     const colArr = board[colIdx];
     let count = 1;
     let idx = colIdx + 1;
-    while (idx < board.length && board [idx][rowIdx] === player) {
+    while (idx < board.length && board[idx][rowIdx] === player) {
         count++;
         idx++;
     }
-    idx = colIdx -1;
-    while((idx >= 0) && board[idx][rowIdx] === player) {
+    idx = colIdx - 1;
+    while ((idx >= 0) && board[idx][rowIdx] === player) {
         count++;
         idx--;
     }
-    return count >= 4 ? winner = turn*-1 : 0;
+    return count >= 4 ? winner = turn * -1 : 0;
 }
 
 function checkDiagWinRight(colIdx, rowIdx, player) {
- const colArr = board[colIdx][rowIdx];
- let count = 1;
- let idx1 = colIdx - 1;
- let idx2 = rowIdx + 1;
+    const colArr = board[colIdx][rowIdx];
+    let count = 1;
+    let idx1 = colIdx - 1;
+    let idx2 = rowIdx + 1;
 
- while (idx1 >= 0 && idx2 < board[0].length && board[idx1][idx2] === player) {
-    count++;
-    idx1--;
-    idx2++;
- }
- idx1 = colIdx + 1;
- idx2 = rowIdx - 1;
- while (idx1 < board.length && idx2 >= 0 && board[idx1][idx2] === player) {
-    count++;
-    idx1++;
-    idx2--;
- }
- return count >= 4 ? winner = turn*-1 : 0;
+    while (idx1 >= 0 && idx2 < board[0].length && board[idx1][idx2] === player) {
+        count++;
+        idx1--;
+        idx2++;
+    }
+    idx1 = colIdx + 1;
+    idx2 = rowIdx - 1;
+    while (idx1 < board.length && idx2 >= 0 && board[idx1][idx2] === player) {
+        count++;
+        idx1++;
+        idx2--;
+    }
+    return count >= 4 ? winner = turn * -1 : 0;
 }
 
 function checkDiagWinLeft(colIdx, rowIdx, player) {
@@ -156,16 +156,16 @@ function checkDiagWinLeft(colIdx, rowIdx, player) {
     let idx1 = colIdx + 1;
     let idx2 = rowIdx + 1;
     while (idx1 < board.length && idx2 >= 0 && board[idx1][idx2] === player) {
-       count++;
-       idx1++;
-       idx2++;
+        count++;
+        idx1++;
+        idx2++;
     }
     idx1 = colIdx - 1;
     idx2 = rowIdx - 1;
     while (idx1 >= 0 && idx2 < board[0].length && board[idx1][idx2] === player) {
-       count++;
-       idx1--;
-       idx2--;
+        count++;
+        idx1--;
+        idx2--;
     }
-    return count >= 4 ? winner = turn*-1 : 0;
-   }
+    return count >= 4 ? winner = turn * -1 : 0;
+}
